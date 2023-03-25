@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+  build:
+    build:
+      network: host
+      context: .
+      args:
+        IMAGE_STEAMCMD_NAME: ${IMAGE_STEAMCMD_NAME}
+        IMAGE_STEAMCMD_VERSION: ${IMAGE_STEAMCMD_VERSION}
+        BUILD_GAME_ID: ${BUILD_GAME_ID}
+      cache_from:
+      - ${IMAGE_STEAMCMD_NAME}:${IMAGE_STEAMCMD_VERSION}
+      - ${BUILD_IMAGE_NAME}:${BUILD_IMAGE_VERSION}
+    image: ${BUILD_IMAGE_NAME}:${BUILD_IMAGE_VERSION}
+    profiles:
+    - build
+
+  server:
+    image: ${BUILD_IMAGE_NAME}:${BUILD_IMAGE_VERSION}
+    secrets:
+    - admin_password
+    env_file:
+    - .env.server
+    environment:
+      PZ_JVM_MEMORY_MIN: ${DEPLOY_MEMORY_RESERVATION}
+      PZ_JVM_MEMORY_MAX: ${DEPLOY_MEMORY_LIMIT}
+    ports:
+    - "27015:27015/tcp"
+    - "27015:27015/udp"
+    - "8766-8767:8766-8767/udp"
+    - "16261-16262:16261-16262/udp"
+    healthcheck:
+      test: nc -z localhost 27015
+      interval: 15s
+      timeout: 2s
+      retries: 50
+      start_period: 250s
+    deploy:
+      resources:
+        reservations:
+          cpus: ${DEPLOY_CPU_RESERVATION}
+          memory: ${DEPLOY_MEMORY_RESERVATION}
+        limits:
+          cpus: ${DEPLOY_CPU_LIMIT}
+          memory: ${DEPLOY_MEMORY_LIMIT}
+      restart_policy:
+        condition: any
+        delay: 15s
+        max_attempts: 5
+        window: 45s
+    volumes:
+    - ./server/.docker/data/Steam:/home/steam/Steam
+    - ./server/.docker/data/server:/home/steam/server
+    - ./server/.docker/data/Zomboid:/home/steam/Zomboid
+
+secrets:
+  admin_password:
+    file: ./server/.docker/secrets/admin_password.txt
+    name: admin_password

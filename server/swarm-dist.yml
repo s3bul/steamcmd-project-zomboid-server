@@ -1,0 +1,59 @@
+secrets:
+  admin_password:
+    file: .docker/secrets/admin_password.txt
+    name: admin_password
+services:
+  server:
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8g
+        reservations:
+          cpus: '2.0'
+          memory: 4g
+      restart_policy:
+        condition: any
+        delay: 15s
+        max_attempts: 5
+        window: 45s
+    environment:
+      PZ_ADMINPASSWORD_FILE: /run/secrets/admin_password
+      PZ_ADMINUSERNAME: admin
+      PZ_JVM_MEMORY_MIN: 4g
+      PZ_JVM_MEMORY_MAX: 8g
+      TZ: Europe/Warsaw
+    healthcheck:
+      interval: 15s
+      retries: 50
+      start_period: 250s
+      test: nc -z localhost 27015
+      timeout: 2s
+    image: s3bul/steamcmd-project-zomboid:0.3.2
+    ports:
+    - protocol: tcp
+      published: 27015
+      target: 27015
+    - protocol: udp
+      published: 27015
+      target: 27015
+    - protocol: udp
+      published: 8766
+      target: 8766
+    - protocol: udp
+      published: 8767
+      target: 8767
+    - protocol: udp
+      published: 16261
+      target: 16261
+    - protocol: udp
+      published: 16262
+      target: 16262
+    secrets:
+    - source: admin_password
+    volumes:
+    - .docker/data/Steam:/home/steam/Steam:rw
+    - .docker/data/server:/home/steam/server:rw
+    - .docker/data/Zomboid:/home/steam/Zomboid:rw
+version: '3.9'
+
