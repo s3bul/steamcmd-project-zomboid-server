@@ -3,8 +3,8 @@ set -e
 
 initServer() {
   "${STEAMCMD_HOME}"/steamcmd.sh +runscript server_script.txt
-  (cd "${SERVER_HOME}" && ln -sfn "${SERVER_HOME}"/jre64/lib/libjsig.so ./)
-  (cd "${SERVER_HOME}" && ln -sfn "${SERVER_HOME}"/natives/libPZXInitThreads64.so ./)
+  (cd "${SERVER_HOME}" && ln -sfn ./jre64/lib/libjsig.so ./)
+  (cd "${SERVER_HOME}" && ln -sfn ./natives/libPZXInitThreads64.so ./)
 }
 
 runServer() {
