@@ -7,4 +7,4 @@
 2. Run script as root `USER_UID=pzuser ./init.sh`
 3. Switch user `su - pzuser`
 4. Update file `./server/swarm.yml`
-5. In `server` path run command `docker stack deploy -c swarm.yml pz`
+5. Run command `docker stack deploy -c ./server/swarm.yml pz`
