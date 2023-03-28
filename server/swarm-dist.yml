@@ -18,10 +18,24 @@ services:
         max_attempts: 5
         window: 45s
     environment:
+#      PZ_SERVERNAME: zomboid
       PZ_ADMINPASSWORD_FILE: /run/secrets/admin_password
+#      PZ_ADMINPASSWORD_AUTO: 1
       PZ_ADMINUSERNAME: admin
+#      PZ_IP: 0.0.0.0
+#      PZ_PORT:
+#      PZ_UDPPORT:
+#      PZ_STEAMVAC: 1
+#      PZ_STEAMPORT1:
+#      PZ_STEAMPORT2:
+#      PZ_NOSTEAM: 1
+#      PZ_MODFOLDERS:
       PZ_JVM_MEMORY_MIN: 4g
       PZ_JVM_MEMORY_MAX: 8g
+#      PZ_JVM_STEAM: 1
+#      PZ_JVM_SOFTRESET: 1
+#      PZ_JVM_DEBUG: 1
+#      PZ_DEBUG: 1
       TZ: Europe/Warsaw
     healthcheck:
       interval: 15s
