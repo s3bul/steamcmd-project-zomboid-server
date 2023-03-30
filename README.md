@@ -8,3 +8,6 @@
 3. Switch user `su - pzuser`
 4. Update file `./server/swarm.yml`
 5. Run command `docker stack deploy -c ./server/swarm.yml pz`
+
+### Requirements
+Remember, more players and mods need more CPU/vCPU and RAM. When you run server with docker swarm, you can change CPU and RAM in file `./server/swarm.yml`.
