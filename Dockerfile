@@ -17,6 +17,6 @@ VOLUME ["${STEAM_HOME}", "${SERVER_HOME}", "${PZ_HOME}"]
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
-CMD ["run"]
+CMD ["runServer"]
 
 EXPOSE 8766-8767/udp 16261-16262/udp
