@@ -1,5 +1,6 @@
 # steamcmd-project-zomboid-server
 
+* Base image https://github.com/s3bul/steamcmd
 * https://pzwiki.net/wiki/Dedicated_Server#Linux
 * https://pzwiki.net/wiki/Startup_parameters
 
@@ -10,7 +11,7 @@
 5. Run command `docker stack deploy -c ./server/swarm.yml pz`
 
 ### Requirements
-Remember, more players and mods need more CPU/vCPU and RAM. When you run server with docker swarm, you can change CPU and RAM in file `./server/swarm.yml`:
+Remember, more players and mods need more CPU/vCPU and RAM. When you run server with docker swarm, you can change CPU and RAM limits in file `./server/swarm.yml`:
 ```yaml
     deploy:
       resources:
