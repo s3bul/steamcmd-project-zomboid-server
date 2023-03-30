@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-initServer() {
+updateServer() {
   "${STEAMCMD_HOME}"/steamcmd.sh +runscript server_script.txt
+}
+
+initServer() {
+  updateServer
   (cd "${SERVER_HOME}" && ln -sfn ./jre64/lib/libjsig.so ./)
   (cd "${SERVER_HOME}" && ln -sfn ./natives/libPZXInitThreads64.so ./)
 }
 
 runServer() {
-  date +%d-%m-%y_%H >"${SERVER_HOME}"/log_start.txt
-
   if [ ! -x "${SERVER_HOME}"/start-server.sh ]; then
     initServer
   fi
@@ -78,19 +80,17 @@ runServer() {
     parameters="${parameters} -debug"
   fi
 
-  date +%d-%m-%y_%H >"${SERVER_HOME}"/log_start.txt
-
   eval "${SERVER_HOME}/start-server.sh ${parameters} $*"
 }
 
 firstCommand=${1}
+commands=("initServer runServer updateServer")
 
-case "${firstCommand}" in
-run)
+# shellcheck disable=SC2076
+if [[ " ${commands[*]} " =~ " ${firstCommand} " ]]; then
   shift
-  runServer "$@"
+  ${firstCommand} "$@"
   exit $?
-  ;;
-esac
+fi
 
 exec "$@"
