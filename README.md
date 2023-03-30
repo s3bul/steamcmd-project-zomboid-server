@@ -10,4 +10,20 @@
 5. Run command `docker stack deploy -c ./server/swarm.yml pz`
 
 ### Requirements
-Remember, more players and mods need more CPU/vCPU and RAM. When you run server with docker swarm, you can change CPU and RAM in file `./server/swarm.yml`.
+Remember, more players and mods need more CPU/vCPU and RAM. When you run server with docker swarm, you can change CPU and RAM in file `./server/swarm.yml`:
+```yaml
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8g
+        reservations:
+          cpus: '2.0'
+          memory: 4g
+```
+and
+```yaml
+    environment:
+      PZ_JVM_MEMORY_MIN: 4g
+      PZ_JVM_MEMORY_MAX: 8g
+```
