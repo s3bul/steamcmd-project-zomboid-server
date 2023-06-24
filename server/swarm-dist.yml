@@ -70,4 +70,3 @@ services:
     - .docker/data/server:/home/steam/server:rw
     - .docker/data/Zomboid:/home/steam/Zomboid:rw
 version: '3.9'
-
