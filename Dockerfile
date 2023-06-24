@@ -9,13 +9,13 @@ ARG BUILD_GAME_ID
 
 ENV PZ_HOME=${USER_HOME}/Zomboid
 
-COPY --chown=${STEAM_USER}:0 docker-entrypoint.sh ./
+COPY --chown=${STEAM_USER}:0 docker-entrypoint.sh /
 
 RUN sed -i "s/{{GAME_ID}}/${BUILD_GAME_ID}/" ${STEAMCMD_HOME}/server_script.txt
 
 VOLUME ["${STEAM_HOME}", "${SERVER_HOME}", "${PZ_HOME}"]
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["runServer"]
 

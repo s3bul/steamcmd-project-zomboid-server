@@ -43,7 +43,7 @@ services:
       start_period: 250s
       test: nc -z localhost 27015
       timeout: 2s
-    image: s3bul/steamcmd-project-zomboid:0.3.2
+    image: s3bul/steamcmd-project-zomboid:1.0.0
     ports:
     - protocol: tcp
       published: 27015
